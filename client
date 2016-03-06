@@ -1,2 +1,2 @@
 #!/bin/bash
-java -cp bin client.Main
+java -cp bin client.Main $*
