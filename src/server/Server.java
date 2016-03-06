@@ -1,5 +1,6 @@
 package server;
 
+import other.packet;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -21,6 +22,7 @@ public class Server {
 		System.out.println( "client ready!" );
 
 		Scanner sc = new Scanner( System.in );
+	
 
 		System.out.println( "send a message to the client" );
 		String sendStr = "";
@@ -28,7 +30,12 @@ public class Server {
 			System.out.print(":");
 			sendStr = sc.next();
 
-			os.writeUTF( sendStr );
+		Packet packet = new Packet(sendStr);
+
+			try{os.writeObject ( packet );}
+			catch(IOException e){
+				e.printStackTrace();
+			}
 		}
 
 		sc.close();
