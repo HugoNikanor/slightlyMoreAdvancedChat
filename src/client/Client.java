@@ -13,11 +13,10 @@ public class Client {
 
 	public Client( String ip, int port ) {
 		try {
+			socket = new Socket(ip, port);
+			in = new ObjectInputStream( socket.getInputStream() );
+
 			while( true ) {
-				socket = new Socket(ip, port);
-
-				in = new ObjectInputStream( socket.getInputStream() );
-
 				String str = ((Packet) in.readObject()).getMessage();
 				System.out.println( str );
 			}
