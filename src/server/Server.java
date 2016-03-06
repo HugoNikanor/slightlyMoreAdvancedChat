@@ -22,7 +22,6 @@ public class Server {
 		System.out.println( "client ready!" );
 
 		Scanner sc = new Scanner( System.in );
-	
 
 		System.out.println( "send a message to the client" );
 		String sendStr = "";
@@ -30,10 +29,9 @@ public class Server {
 			System.out.print(":");
 			sendStr = sc.next();
 
-		Packet packet = new Packet(sendStr);
-
-			try{os.writeObject ( packet );}
-			catch(IOException e){
+			try {
+				os.writeObject( new Packet(sendStr) );
+			} catch( IOException e ) {
 				e.printStackTrace();
 			}
 		}
