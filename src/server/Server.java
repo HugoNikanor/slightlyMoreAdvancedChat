@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Server {
 	private ServerSocket server;
@@ -14,9 +15,13 @@ public class Server {
 	private ObjectOutputStream os;
 
 	public Server() throws IOException {
-		server = new ServerSocket(8080);
 
+		ArrayList clientList = new ArrayList();
 		client = server.accept();
+
+		server = new ServerSocket(8080);
+		clientList.add(client);
+		
 		os = new ObjectOutputStream(client.getOutputStream());
 
 		System.out.println( "client ready!" );
