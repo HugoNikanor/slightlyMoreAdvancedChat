@@ -17,13 +17,18 @@ public class Client {
 
 	private Scanner sc;
 
+	private String name;
+
 	public Client( String ip, int port ) {
 		try {
+			sc = new Scanner( System.in );
+
+			name = System.getProperty("user.name");
+			System.out.println(name);
+
 			socket = new Socket(ip, port);
 			in = new ObjectInputStream( socket.getInputStream() );
 			out = new ObjectOutputStream( socket.getOutputStream() );
-
-			sc = new Scanner( System.in );
 
 			new Thread(() -> {
 				try {
@@ -39,7 +44,7 @@ public class Client {
 			while( true ) {
 				System.out.print( ":" );
 				String outStr = sc.next();
-				out.writeObject( new Packet(outStr) );
+				out.writeObject( new Packet(name, outStr) );
 			}
 		} catch( UnknownHostException e ) {
 		} catch( IOException e ) {
