@@ -3,45 +3,70 @@ package server;
 import other.Packet;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+
 public class Server {
-	private ServerSocket server;
-	private Socket client;
 
-	private ObjectOutputStream os;
-
+	private ArrayList <Socket> clientList;
+	private ArrayList <ObjectOutputStream> objectOutList;
+     	private ServerSocket server; 
 	public Server() throws IOException {
-
-		ArrayList clientList = new ArrayList();
-		client = server.accept();
-
-		server = new ServerSocket(8080);
-		clientList.add(client);
+	
 		
-		os = new ObjectOutputStream(client.getOutputStream());
+       		clientList = new ArrayList<Socket>();
+       		objectOutList = new ArrayList<ObjectOutputStream>();
+		server = new ServerSocket(8080);
+		new Thread ( new ConnectionThread()).start();
 
-		System.out.println( "client ready!" );
+	}
 
-		Scanner sc = new Scanner( System.in );
+	private class ThreadClass implements Runnable{
 
-		System.out.println( "send a message to the client" );
-		String sendStr = "";
-		while( !sendStr.equals("STOP") ) {
-			System.out.print(":");
-			sendStr = sc.next();
+		private ObjectInputStream in;
+		
 
-			try {
-				os.writeObject( new Packet(sendStr) );
-			} catch( IOException e ) {
-				e.printStackTrace();
+		public ThreadClass(ObjectInputStream in){
+			
+			this.in = in;
+
+
+		}
+	
+		@Override
+		public void run(){
+			while(true){
+
+				try{
+					Packet pk;
+					
+					pk = (Packet) in.readObject();
+					for(int i=0;i<objectOutList.size();i++){
+						objectOutList.get(i).writeObject(pk);
+					}
+				}catch(Exception e){e.printStackTrace();}
 			}
 		}
+	}
 
-		sc.close();
-		os.close();
+
+	private class ConnectionThread implements Runnable{
+
+		@Override
+		public void run(){
+			while(true){
+				
+				try{
+		
+					clientList.add(server.accept());
+					objectOutList.add(new ObjectOutputStream(clientList.get(clientList.size()-1).getOutputStream()));
+					new Thread(new ThreadClass(new ObjectInputStream(clientList.get(clientList.size()-1).getInputStream()))).start();
+				}catch(Exception e){e.printStackTrace();}
+			}
+		}
 	}
 }
