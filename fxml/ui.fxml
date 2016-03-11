@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.TextFlow?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="client.FXInterface" stylesheets="@../stylesheets/ui.css">
+	<TextFlow fx:id="textFlow" minHeight="100"/>
+	<HBox>
+		<TextField promptText="send message" onAction="#sendMessage" fx:id="textField" />
+		<Button text="→" onAction="#sendMessage" />
+	</HBox>
+</VBox>
