@@ -13,7 +13,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="client.FXInterface" stylesheets="@../stylesheets/ui.css">
+<VBox fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="client.UiController" stylesheets="@../stylesheets/ui.css">
 	<TextFlow fx:id="textFlow" minHeight="100"/>
 	<HBox>
 		<TextField promptText="send message" onAction="#sendMessage" fx:id="textField" />

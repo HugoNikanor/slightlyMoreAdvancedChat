@@ -23,6 +23,9 @@ public class Client {
 		//this.outStream = outStream;
 
 		try {
+			System.out.println( ip );
+			System.out.println( port );
+
 			socket = new Socket(ip, port);
 			in = new ObjectInputStream( socket.getInputStream() );
 			out = new ObjectOutputStream( socket.getOutputStream() );

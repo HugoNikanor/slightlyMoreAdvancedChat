@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 
@@ -39,6 +38,7 @@ public class Server {
 	
 		@Override
 		public void run(){
+			System.out.println("client conncted");
 			while(true){
 
 				try{

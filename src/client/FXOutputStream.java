@@ -2,6 +2,7 @@ package client;
 
 import java.io.PrintStream;
 
+import javafx.application.Platform;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -16,13 +17,14 @@ public class FXOutputStream extends PrintStream {
 
 	@Override
 	public void println( String msg ) {
-		out.getChildren().add(
-				new Text( String.format( "%s%n", msg )));
+		print( msg.concat("\n") );
 	}
 
 	@Override
 	public void print( String msg ) {
-		out.getChildren().add(
-				new Text( msg ));
+		Platform.runLater( new Thread( () -> {
+			out.getChildren().add(
+					new Text( msg ));
+		}));
 	}
 }

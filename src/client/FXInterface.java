@@ -4,40 +4,28 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import other.Packet;
+public class FXInterface extends Application {
 
-public class FXInterface extends Application implements Initializable {
+	private String ip;
+	private int port;
 
-
-	@FXML
-	private TextFlow textFlow;
-
-	@FXML
-	private TextField textField;
-
-	private Client connection;
 
 	@Override
 	public void init() throws NumberFormatException, IOException {
 		Application.Parameters param = this.getParameters();
 		List<String> args = param.getRaw();
 
-		connection = new Client(
-				args.get(0),
-				Integer.parseInt( args.get(1) ),
-				new FXOutputStream(textFlow) );
+		ip = args.get(0);
+		port = Integer.parseInt( args.get(1) );
+		System.out.println( ip );
+		System.out.println( port );
 
 	}
 
@@ -48,23 +36,14 @@ public class FXInterface extends Application implements Initializable {
 		FXMLLoader loader = new FXMLLoader( url );
 
 		Pane root = loader.load();
+	 	((UiController) loader.getController()).addClientData( ip, port );
 
 		Scene scene = new Scene( root );
 		primaryStage.setScene( scene );
 		primaryStage.setTitle( "Chat" );
 		primaryStage.show();
 
-	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 
 	}
 
-	@FXML
-	public void sendMessage() {
-		connection.sendMessage( new Packet( textField.getText() ) );
-		textField.clear();
-	}
 }
