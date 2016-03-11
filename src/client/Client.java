@@ -26,6 +26,7 @@ public class Client {
 			sc = new Scanner( System.in );
 
 			new Thread(() -> {
+				while( true ) {
 				try {
 					String str = ((Packet) in.readObject()).getMessage();
 					System.out.println( str );
@@ -33,6 +34,7 @@ public class Client {
 					e.printStackTrace();
 				} catch( ClassNotFoundException e ) {
 					e.printStackTrace();
+				}
 				}
 			}).start();
 
