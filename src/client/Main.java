@@ -7,7 +7,7 @@ public class Main {
 			System.exit( -1 );
 		}
 
-		new Client( args[0], Integer.parseInt(args[1]) );
+		new TerminalInterface( args[0], Integer.parseInt(args[1]) );
 
 	}
 }
