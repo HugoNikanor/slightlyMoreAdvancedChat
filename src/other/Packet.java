@@ -17,4 +17,9 @@ public class Packet implements Serializable {
 	public String getMessage() {
 		return message;
 	}
+
+	@Override
+	public String toString() {
+		return String.format( "Mesage: %s (%s)", message, this.hashCode() );
+	}
 }

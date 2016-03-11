@@ -49,6 +49,7 @@ public class Server {
 				e.printStackTrace();
 			}
 
+			System.out.println( "New client conneced" );
 			new Thread( this ).start();
 		}
 
@@ -70,8 +71,8 @@ public class Server {
 			while( true ) {
 				try {
 					Packet inPacket = (Packet) in.readObject();
+					System.out.println( inPacket );
 					for( ObjectOutputStream out : outStreams ) {
-						System.out.println( inPacket );
 						out.writeObject( inPacket );
 					}
 				} catch( Exception e ) {
